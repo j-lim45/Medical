@@ -17,13 +17,13 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 public class Reader {
     
-    public static ArrayList<Staff> readDoctorsDatabase() {
+    public static ArrayList<Staff> readDoctorsDatabase() {  // returns an arraylist of all of the staff after reading the text file
         
         ArrayList<Staff> doctorsList = new ArrayList<Staff>();
         try {
             BufferedReader bReader = new BufferedReader(new FileReader(new File("doctors.txt")));
 
-            String line = bReader.readLine(); // The first line?
+            String line = bReader.readLine(); // The first line
 
             while (line != null) {
                     String[] currentLine = line.split(",");
@@ -36,10 +36,7 @@ public class Reader {
                     else if (currentLine[2].equals("Opthalmologist"))    doctorsList.add(new Ophthalmologist(currentLine[0], currentLine[1]));
                     line = bReader.readLine(); // read next line
             }
-            
-//            for (Patient o : theArr) {
-//                System.out.println(o.patientAge);
-//            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,8 +44,8 @@ public class Reader {
         return doctorsList;
     }
     
-    
-    public static DefaultTableModel initDoctorsTableModel() {
+
+    public static DefaultTableModel initDoctorsTableModel() {           // gets the entire doctors.txt to display when you open the Doctors table frame
         DefaultTableModel doctorsTableModel = new DefaultTableModel();  // The model data to be used for the table
                 
         doctorsTableModel.setColumnIdentifiers(new String[]{"Last Name", "First Name", "Occupation"});
@@ -61,7 +58,7 @@ public class Reader {
         return doctorsTableModel;
     }
     
-    public static int countOccupations(String occupation) {
+    public static int countOccupations(String occupation) {             // used solely to identify number of rows for 2d array row size by counting how many occupations in the database
         int counter = 0;
         for (Staff o : readDoctorsDatabase()) {
             if (o.getClass().getSimpleName().equals(occupation))    counter++;
@@ -70,7 +67,7 @@ public class Reader {
         return counter;
     }
     
-    public static String[][] updateDoctors() {
+    public static String[][] updateDoctors() {                          // used to update Doctors database table to show every staff
         String[][] objArr = new String[readDoctorsDatabase().size()][3];
 
         int i = 0;
@@ -81,14 +78,14 @@ public class Reader {
             i++;
         }
 
-        return objArr;
+        return objArr;                                                  // setDataVactor() asks for String[][] so i cant use a resizable array
     }
     
-    public static String[][] updateDoctors(String occupation) {
-        String[][] objArr = new String[countOccupations(occupation)][3];
+    public static String[][] updateDoctors(String occupation) {         // updates Doctors database table to only show specific occupation
+        String[][] objArr = new String[countOccupations(occupation)][3];// number of rows is calculated by method to identify how many occupations in the database
         
         int i = 0;
-        for (Staff o : readDoctorsDatabase()) {
+        for (Staff o : readDoctorsDatabase()) {                         
             if (o.getClass().getSimpleName().equals(occupation)) {
                 objArr[i][0] = o.getLastName();
                 objArr[i][1] = o.getFirstName();
@@ -98,18 +95,40 @@ public class Reader {
             }
         }
 
-        return objArr;
+        return objArr;                                                  // setDataVactor() asks for String[][] so i cant use a resizable array
     }
 
     //       
-    public static Staff assignDoctor(String occupation) {
+    public static Staff assignDoctor(String occupation) {               // returns a random doctor based on a specified occupation
         ArrayList<Staff> occupationList = new ArrayList<Staff>();
         for (Staff o : readDoctorsDatabase()) {
             if (o.getClass().getSimpleName().equals(occupation))    occupationList.add(o);
         }
 
-        // returns a random staff specified from occupationList
         return occupationList.get(new java.util.Random().nextInt(occupationList.size()));
     }
+    
+    public static void writeToDoctors(Staff o) {                        // Use this when adding a new doctor to the database (it needs a staff object parameter)
+        BufferedReader br = null; BufferedWriter bw = null;
+        String lineToWrite =  o.getLastName() + "," + o.getFirstName() + "," + o.getClass().getSimpleName();
+
+        try {
+            br = new BufferedReader(new FileReader(new File("doctors.txt")));
+            bw = new BufferedWriter(new FileWriter(new File("doctors.txt"), true));
+
+               int rowIndex = 0;
+            while ((br.readLine()) != null) { // while (bufferedreader does not read a line that doesnt contain nothing) { add number of lines read by the bufferedreader by 1 }
+                rowIndex++; 
+            }
+
+            if (rowIndex > 0) bw.newLine(); // writes a new line after the last row of content so that it doesnt overwrite it
+            bw.write(lineToWrite); br.close(); bw.close(); // writes the actual line
+
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+
+    }
+
     
 }
