@@ -26,6 +26,8 @@ public class MriUI extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+
+
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -134,6 +136,7 @@ public class MriUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    protected String lineMRI = "";
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String findings = Findings.getText();
         String impressions = Impressions.getText();
@@ -150,7 +153,8 @@ public class MriUI extends javax.swing.JFrame {
         if (errorMessages.length() > 0) {
             JOptionPane.showMessageDialog(rootPane, errorMessages.toString(), "Input Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            String linemri = findings + ";" + impressions;
+            lineMRI = PatientForm.nameToSend.split(";")[0] + ";" + PatientForm.nameToSend.split(";")[1] + ";" + findings + ";" + impressions;
+            Reader.writeToMRI(lineMRI);
             dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

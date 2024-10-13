@@ -3,14 +3,16 @@ package com.mycompany.medical;
 public class Patient {
     // Medical Records
     protected String lastName, firstName, age, bloodType;
-    protected java.util.ArrayList<String> illnessList;
+    protected String illness;
     protected boolean insured;
     
     // Hospital Records
-    protected java.util.ArrayList<TestResult> testResultsList;
-    protected java.util.ArrayList<Prescription> prescriptionList;
+    protected java.util.HashMap<String, TestResult> testResultsList;
+    protected String prescription;
     protected Staff assignedStaff;
     protected double bill;
+
+
 
     public String getLastName() {
         return lastName;
@@ -28,16 +30,21 @@ public class Patient {
         return bloodType;
     }
 
+    public String getIllness() {
+        return illness;
+    }
 
-    public java.util.ArrayList<TestResult> getTestResultsList() {
+    public String getPrescription() {
+        return prescription;
+    }
+
+    public java.util.HashMap<String, TestResult> getTestResultsList() {
         return testResultsList;
     }
 
-    public java.util.ArrayList<Prescription> getPrescription() {
-        return prescriptionList;
-    }
+    
 
-    public Staff getAssignedDoctor() {
+    public Staff getAssignedStaff() {
         return assignedStaff;
     }
 
@@ -67,12 +74,16 @@ public class Patient {
         this.insured = insured;
     }
 
-    public void addIllness(String illness) {
-        this.illnessList.add(illness);
+    public void setIllness(String illness) {
+        this.illness = illness;
     }
 
-    public void addPrescription(Prescription prescription) {
-        this.prescriptionList.add(prescription);
+    public void setPrescription(String prescription) {
+        this.prescription = prescription;
+    }
+
+    public void addTestResult(TestResult testResult) { // testResultsList<"BloodTest", someObjName>
+        testResultsList.put(testResult.getClass().getSimpleName(), testResult);
     }
 
     public void setAssignedStaff(Staff assignedStaff) {

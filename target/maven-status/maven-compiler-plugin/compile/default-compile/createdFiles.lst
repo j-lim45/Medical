@@ -3,14 +3,12 @@ com\mycompany\medical\MRI.class
 com\mycompany\medical\PatientForm$9.class
 com\mycompany\medical\DoctorsPage$8.class
 com\mycompany\medical\LoginPage$4.class
-com\mycompany\medical\Dermatologist.class
 com\mycompany\medical\Neurologist.class
 com\mycompany\medical\MenuPage$1.class
 com\mycompany\medical\MedicalRecord.class
 com\mycompany\medical\Patient.class
 MainFrame$1.class
 com\mycompany\medical\PatientForm$12.class
-com\mycompany\medical\Ophthalmologist.class
 com\mycompany\medical\MenuPage$4.class
 com\mycompany\medical\MenuPage.class
 com\mycompany\medical\PatientForm.class
@@ -33,7 +31,6 @@ com\mycompany\medical\DoctorsPage$6.class
 com\mycompany\medical\LoginPage$2.class
 com\mycompany\medical\PatientForm$14.class
 com\mycompany\medical\Doctor.class
-com\mycompany\medical\CTScan.class
 com\mycompany\medical\Nurse.class
 com\mycompany\medical\SeniorCitizenPatient.class
 com\mycompany\medical\MenuPage$2.class

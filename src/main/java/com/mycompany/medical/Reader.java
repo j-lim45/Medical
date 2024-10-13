@@ -14,8 +14,70 @@ import java.io.BufferedWriter;
 import java.io.FileWriter; 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 public class Reader {
+
+    public static ArrayList<Patient> readPatientsDatabase() { // returns an arraylist of all of the patients after reading patients.txt, bloodtest.txt, and mri.txt
+        ArrayList<Patient> patientsList = new ArrayList<Patient>();
+        HashMap<String, String> bloodTestList = new HashMap<String, String>();
+        HashMap<String, String> mriList = new HashMap<String, String>();
+
+        try {
+            BufferedReader bReader = new BufferedReader(new FileReader(new File("bloodtest.txt")));
+
+            // for storing blood test results
+            String line = bReader.readLine();
+            while (line != null) {                      
+                    String[] currentLine = line.split(";");
+                    
+                    bloodTestList.put(currentLine[0], currentLine[1]);
+                    line = bReader.readLine(); // read next line
+            }
+            
+            bReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            BufferedReader bReader = new BufferedReader(new FileReader(new File("mri.txt")));
+
+            // for storing blood test results
+            String line = bReader.readLine();
+            while (line != null) {                      
+                    String[] currentLine = line.split(";");
+                    
+                    bloodTestList.put(currentLine[0], currentLine[1]);
+                    line = bReader.readLine(); // read next line
+            }
+            
+            bReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            BufferedReader bReader = new BufferedReader(new FileReader(new File("patients.txt")));
+
+            // for storing blood test results
+            String line = bReader.readLine();
+            while (line != null) {                      
+                    String[] currentLine = line.split(";");
+                    
+                    patientsList.add(new Patient());
+                    Patient currentPatient = patientsList.get(patientsList.size()-1);
+                    line = bReader.readLine(); // read next line
+            }
+            
+            bReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+
+        return patientsList;
+    }
     
     public static ArrayList<Staff> readDoctorsDatabase() {  // returns an arraylist of all of the staff after reading the text file
         
@@ -30,10 +92,8 @@ public class Reader {
                     
                     if (currentLine[2].equals("Nurse"))                  doctorsList.add(new Nurse(currentLine[0], currentLine[1]));
                     else if (currentLine[2].equals("Cardiologist"))      doctorsList.add(new Cardiologist(currentLine[0], currentLine[1]));
-                    else if (currentLine[2].equals("Dermatologist"))     doctorsList.add(new Dermatologist(currentLine[0], currentLine[1]));
                     else if (currentLine[2].equals("Neurologist"))       doctorsList.add(new Neurologist(currentLine[0], currentLine[1]));
                     else if (currentLine[2].equals("Oncologist"))        doctorsList.add(new Oncologist(currentLine[0], currentLine[1]));
-                    else if (currentLine[2].equals("Opthalmologist"))    doctorsList.add(new Ophthalmologist(currentLine[0], currentLine[1]));
                     line = bReader.readLine(); // read next line
             }
 
@@ -130,5 +190,43 @@ public class Reader {
 
     }
 
-    
+    public static void writeToBloodTest(String lineToWrite) { // ur supposed to have the line ready for writing
+        BufferedReader br = null; BufferedWriter bw = null;
+        System.out.println(lineToWrite);
+        try {
+            br = new BufferedReader(new FileReader(new File("bloodtest.txt")));
+            bw = new BufferedWriter(new FileWriter(new File("bloodtest.txt"), true));
+
+               int rowIndex = 0;
+            while ((br.readLine()) != null) { // while (bufferedreader does not read a line that doesnt contain nothing) { add number of lines read by the bufferedreader by 1 }
+                rowIndex++; 
+            }
+
+            if (rowIndex > 0) bw.newLine(); // writes a new line after the last row of content so that it doesnt overwrite it
+            bw.write(lineToWrite); br.close(); bw.close(); // writes the actual line
+
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+
+    public static void writeToMRI(String lineToWrite) {
+        BufferedReader br = null; BufferedWriter bw = null;
+
+        try {
+            br = new BufferedReader(new FileReader(new File("mri.txt")));
+            bw = new BufferedWriter(new FileWriter(new File("mri.txt"), true));
+
+               int rowIndex = 0;
+            while ((br.readLine()) != null) { // while (bufferedreader does not read a line that doesnt contain nothing) { add number of lines read by the bufferedreader by 1 }
+                rowIndex++; 
+            }
+
+            if (rowIndex > 0) bw.newLine(); // writes a new line after the last row of content so that it doesnt overwrite it
+            bw.write(lineToWrite); br.close(); bw.close(); // writes the actual line
+
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
 }

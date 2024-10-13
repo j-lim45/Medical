@@ -1,21 +1,15 @@
-NYE,BILL,Doctor
+NYE,BILL,Cardiologist
 ATKINS,ROBERT,Cardiologist
 NIGHTINGALE,FLORENCE,Nurse
-FUSCHS,ERNST,Opthalmologist
 HOFFMAN,MURRAY,Cardiologist
 PARTRIDGE,ANNA,Oncologist
-OREN,NORMAN,Dermatologist
-LORRY,ANNE,Dermatologist
 HOLZMANN,MAX,Cardiologist
 KURIAN,ALLYSON,Oncologist
 KLAUS,DAVID,Oncologist
 FLATEAU,EDDIE,Neurologist
-TYSON,NEIL DEGRASSE,Doctor
+TYSON,NEIL DEGRASSE,Neurologist
 AKARI,GARADEL,Nurse
-SATO,TSUTOMU,Opthalmologist
 EL GATO,JUAN,Oncologist
 STENZA,RANJO,Nurse
-HEBRA,FERDINAND,Dermatologist
 EMMANUEL,EZEKIEL,Oncologist
 WOLDERMAR,MOBITZ,Cardiologist
-GONIN,JULES,Opthalmologist

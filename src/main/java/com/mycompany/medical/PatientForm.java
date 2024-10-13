@@ -46,8 +46,6 @@ public class PatientForm extends javax.swing.JFrame {
         insureyes = new javax.swing.JRadioButton();
         insureno = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        Nurse = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         Diagnosis = new javax.swing.JTextField();
         Submit = new javax.swing.JButton();
@@ -57,7 +55,6 @@ public class PatientForm extends javax.swing.JFrame {
         Doctor = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         MRI = new javax.swing.JCheckBox();
-        CT = new javax.swing.JCheckBox();
         Blood = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -167,9 +164,6 @@ public class PatientForm extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setText("Insurance:");
 
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel8.setText("Nurse:");
-
         jLabel9.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel9.setText("Prescription:");
 
@@ -205,7 +199,7 @@ public class PatientForm extends javax.swing.JFrame {
         });
 
         Doctor.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        Doctor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Cardiologist", "Dermatologist", "Neurologist", "Oncologist", "Opthalmologist" }));
+        Doctor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Cardiologist", "Neurologist", "Oncologist" }));
         Doctor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DoctorActionPerformed(evt);
@@ -223,11 +217,13 @@ public class PatientForm extends javax.swing.JFrame {
             }
         });
 
-        CT.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        CT.setText("CTScan");
-
         Blood.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         Blood.setText("Blood");
+        Blood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BloodActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 204));
 
@@ -265,29 +261,24 @@ public class PatientForm extends javax.swing.JFrame {
                         .addComponent(fname))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(Male)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(Female))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(Nurse))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel10)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(Diagnosis))
-                                .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Male)
+                                .addGap(18, 18, 18)
+                                .addComponent(Female))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(Prescription, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel10))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Diagnosis)
+                                    .addComponent(Prescription, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)))
                             .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,8 +312,6 @@ public class PatientForm extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(MRI)
-                                        .addGap(14, 14, 14)
-                                        .addComponent(CT)
                                         .addGap(18, 18, 18)
                                         .addComponent(Blood)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -374,13 +363,9 @@ public class PatientForm extends javax.swing.JFrame {
                                     .addComponent(insureno)
                                     .addComponent(jLabel7))))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                        .addComponent(Nurse))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel11)
-                        .addComponent(Doctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(Doctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -394,11 +379,9 @@ public class PatientForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(MRI, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(CT)
-                                .addComponent(Blood)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(MRI)
+                            .addComponent(Blood))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -449,6 +432,7 @@ public class PatientForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PrescriptionActionPerformed
 
+    protected static String nameToSend = ";"; // to identify name when writing to test result txt
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         String fn = fname.getText();
         String ln = lname.getText();
@@ -456,10 +440,10 @@ public class PatientForm extends javax.swing.JFrame {
         String sex = "";
         String insurance = "";
         String blood = "";
-        String doctor = "";
-        String nurse = Nurse.getText();
+        Staff doctor = null;
         String diagnosis = Diagnosis.getText();
         String prescription = Prescription.getText();
+
 
         StringBuilder errorMessages = new StringBuilder();
         
@@ -481,9 +465,6 @@ public class PatientForm extends javax.swing.JFrame {
             } catch (NumberFormatException e) {
                 errorMessages.append("Age must be an integer\n");
             }
-        }
-        if (nurse.isEmpty()) {
-            errorMessages.append("Please fill out the nurse's name\n");
         }
         if (diagnosis.isEmpty()) {
             errorMessages.append("Please fill out the diagnosis\n");
@@ -516,41 +497,35 @@ public class PatientForm extends javax.swing.JFrame {
         if (Doctor.getSelectedItem() == null || Doctor.getSelectedItem().equals("")) {
             errorMessages.append("Please Select Your Doctor\n");
         } else {
-            doctor = Doctor.getSelectedItem().toString();
+
             if(Doctor.getSelectedItem().toString().length() > 0){
-                System.out.println("Hello " + Reader.assignDoctor((Doctor.getSelectedItem().toString())));
+                doctor = Reader.assignDoctor((Doctor.getSelectedItem().toString()));
             } else {
                 errorMessages.append("Please choose a specialist\n");
             }
         }
         
-//        Checkbox
-        if (Blood.isSelected()){
-            BloodTestUI obj = new BloodTestUI();
-            obj.setVisible(true);
-        }
-        
-        if (MRI.isSelected()){
-            MriUI obj = new MriUI();
-            obj.setVisible(true);
-        }
-        
-        if (CT.isSelected()){
-            CtUI obj = new CtUI();
-            obj.setVisible(true);
-        }
-
         // Check if there are any error messages
         if (errorMessages.length() > 0) {
             JOptionPane.showMessageDialog(rootPane, errorMessages.toString(), "Input Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
+            nameToSend = ln + "," + fn;
+            //        Checkbox
+            if (Blood.isSelected()){
+                BloodTestUI obj = new BloodTestUI();
+                obj.setVisible(true);
+            }
 
-            String ctScanResults = "0,0";
-            String mriResults = "0,0";
-            String bloodTestResults = "0,0,0,0,0";
-            String lineToWrite = ln + ";" + fn + ";" + age + ";" + blood + ";" + sex + ";" + insurance + ";" + nurse + ";" + diagnosis + ";" + prescription + ";" + ctScanResults + ";" + mriResults + ";" + bloodTestResults;
+            if (MRI.isSelected()){
+                MriUI obj = new MriUI();
+                obj.setVisible(true);
+            }
+
+            String lineToWrite = ln + ";" + fn + ";" + age + ";" + blood + ";" + sex + ";" + insurance + ";" + doctor.getLastName() + "," + doctor.getFirstName() + ";" + diagnosis + ";" + prescription;
             
+            System.out.println(lineToWrite);
+
 //          Set to default after submitting
             fname.setText("");
             lname.setText("");
@@ -561,8 +536,6 @@ public class PatientForm extends javax.swing.JFrame {
             Doctor.setSelectedIndex(-1);
             Blood.setSelected(false);
             MRI.setSelected(false);
-            CT.setSelected(false);
-            Nurse.setText("");
             Diagnosis.setText("");
             Prescription.setText("");
         }
@@ -584,6 +557,10 @@ public class PatientForm extends javax.swing.JFrame {
     private void MRIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MRIActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MRIActionPerformed
+
+    private void BloodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BloodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BloodActionPerformed
 
     /**
      * @param args the command line arguments
@@ -624,7 +601,6 @@ public class PatientForm extends javax.swing.JFrame {
     private javax.swing.JTextField Age;
     private javax.swing.JCheckBox Blood;
     private javax.swing.JComboBox<String> Btype;
-    private javax.swing.JCheckBox CT;
     private javax.swing.JTextField Diagnosis;
     private javax.swing.JComboBox<String> Doctor;
     private javax.swing.JRadioButton Female;
@@ -632,7 +608,6 @@ public class PatientForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox MRI;
     private javax.swing.JRadioButton Male;
     private javax.swing.JButton Menu;
-    private javax.swing.JTextField Nurse;
     private javax.swing.JTextField Prescription;
     private javax.swing.ButtonGroup Sex;
     private javax.swing.JButton Submit;
@@ -649,7 +624,6 @@ public class PatientForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
