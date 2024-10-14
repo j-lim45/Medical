@@ -443,7 +443,7 @@ public class PatientForm extends javax.swing.JFrame {
         Staff doctor = null;
         String diagnosis = Diagnosis.getText();
         String prescription = Prescription.getText();
-
+        double bill = 0;
 
         StringBuilder errorMessages = new StringBuilder();
         
@@ -477,14 +477,16 @@ public class PatientForm extends javax.swing.JFrame {
         if (Sex.getSelection() == null) {
             errorMessages.append("Please Select Your Sex\n");
         } else {
-            sex = Sex.getSelection().getActionCommand();
+            if (Male.isSelected())          sex = "male".toUpperCase();
+            else                            sex = "female".toUpperCase();
         }
 
         // Insurance Status
         if (Insurance.getSelection() == null) {
             errorMessages.append("Please Select Insurance Status\n");
         } else {
-            insurance = Insurance.getSelection().getActionCommand();
+            if (insureyes.isSelected())     insurance = "true";
+            else                            insurance = "false";
         }
 
         // Combo Box
@@ -510,21 +512,25 @@ public class PatientForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, errorMessages.toString(), "Input Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            nameToSend = ln + "," + fn;
+            nameToSend = ln.toUpperCase() + "," + fn.toUpperCase();
             //        Checkbox
             if (Blood.isSelected()){
                 BloodTestUI obj = new BloodTestUI();
                 obj.setVisible(true);
+                bill += 500;
             }
 
             if (MRI.isSelected()){
                 MriUI obj = new MriUI();
                 obj.setVisible(true);
+                bill += 15000;
             }
 
-            String lineToWrite = ln + ";" + fn + ";" + age + ";" + blood + ";" + sex + ";" + insurance + ";" + doctor.getLastName() + "," + doctor.getFirstName() + ";" + diagnosis + ";" + prescription;
+            bill += doctor.getFee();
+            String lineToWrite = ln.toUpperCase() + ";" + fn.toUpperCase() + ";" + age + ";" + blood + ";" + sex.toUpperCase() + ";" + insurance + ";" + doctor.getLastName() + "," + doctor.getFirstName() + ";" + diagnosis.toUpperCase() + ";" + prescription.toUpperCase();
             
             System.out.println(lineToWrite);
+            Reader.writeToPatients(lineToWrite);
 
 //          Set to default after submitting
             fname.setText("");

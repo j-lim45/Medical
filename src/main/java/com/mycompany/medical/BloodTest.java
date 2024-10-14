@@ -1,7 +1,7 @@
 package com.mycompany.medical;
 
-public class BloodTest implements TestResult {
-    private double fee = 500;
+public class BloodTest extends TestResult {
+    private double fee = 500; // if you plan on changing the fee, please change it too in PatientForm.java
 
     // Blood Count
     private double sugar;           // 76.36 - 110.91 mg/dL
@@ -28,6 +28,22 @@ public class BloodTest implements TestResult {
         this.triglycerides = triglycerides;
         this.creatinine = creatinine;
         this.uricAcid = uricAcid;
+    }
+
+    
+    public String getFindings() {
+        return "1";
+    }
+
+    public String getImpression() {
+        return "1";
+    }
+
+
+    public void setFindings(String findings) {
+    }
+
+    public void setImpression(String impression) {
     }
 
 

@@ -1,5 +1,7 @@
 package com.mycompany.medical;
 
+import java.util.HashMap;
+
 public class Patient {
     // Medical Records
     protected String lastName, firstName, age, bloodType, gender;
@@ -7,7 +9,7 @@ public class Patient {
     protected boolean insured;
     
     // Hospital Records
-    protected java.util.HashMap<String, TestResult> testResultsList;
+    protected java.util.HashMap<String, TestResult> testResultsList = new HashMap<String, TestResult>();
     protected String prescription;
     protected Staff assignedStaff;
     protected double bill;
@@ -36,6 +38,10 @@ public class Patient {
 
     public String getIllness() {
         return illness;
+    }
+
+    public boolean getInsured() {
+        return insured;
     }
 
     public String getPrescription() {

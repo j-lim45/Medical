@@ -23,6 +23,7 @@ public class Reader {
         HashMap<String, BloodTest> bloodTestList = new HashMap<String, BloodTest>();
         HashMap<String, MRI> mriList = new HashMap<String, MRI>();
 
+        // Reads every blood test result in bloodtest.txt identifiable by "LASTNAME,FIRSTNAME" as the key
         try {
             BufferedReader bReader = new BufferedReader(new FileReader(new File("bloodtest.txt")));
 
@@ -30,7 +31,6 @@ public class Reader {
             String line = bReader.readLine();
             while (line != null) {                      
                     String[] currentLine = line.split(";");
-                    
 
                     bloodTestList.put(currentLine[0], 
                     new BloodTest(Double.parseDouble(currentLine[1].split(",")[0]), 
@@ -40,12 +40,12 @@ public class Reader {
                         Double.parseDouble(currentLine[1].split(",")[4])));
                     line = bReader.readLine(); // read next line
             }
-            
             bReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        // Reads every MRI result in mri.text identifiable by "LASTNAME,FIRSTNAME" as the key
         try {
             BufferedReader bReader = new BufferedReader(new FileReader(new File("mri.txt")));
 
@@ -54,54 +54,79 @@ public class Reader {
             while (line != null) {                      
                     String[] currentLine = line.split(";");
                     
-                    mriList.put(currentLine[0], new MRI(currentLine[1], currentLine[2]));
-                    line = bReader.readLine(); // read next line
+                    mriList.put(currentLine[0], new MRI(currentLine[1], currentLine[2])); // Key: LASTNAME,FIRSTNAME | Value: MRI Object(Findings,Impressions)
+                    line = bReader.readLine();  // read next line
             }
-            
             bReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        // Reads every line in patient.txt to parse as a Patient object stored in patientsList
         try {
             BufferedReader bReader = new BufferedReader(new FileReader(new File("patients.txt")));
 
-            // for storing blood test results
             String line = bReader.readLine();
             while (line != null) {                      
                     String[] currentLine = line.split(";");
-                    
-                    patientsList.add(new Patient());
+                    double currentPatientbill = 0;
+
+                    // Checks if the patient is a senior citizen
+                    if (Integer.parseInt(currentLine[2]) >= 65) patientsList.add(new SeniorCitizenPatient());
+                    else                                        patientsList.add(new Patient());
+
+                    // sets instance variables for the current patient
                     patientsList.get(patientsList.size()-1).setLastName(currentLine[0]);
-                    patientsList.get(patientsList.size()-1).setLastName(currentLine[1]);
+                    patientsList.get(patientsList.size()-1).setFirstName(currentLine[1]);
                     patientsList.get(patientsList.size()-1).setAge(currentLine[2]);
-                    /* TO DO : PLEASE CONVERT AGE TO MAKE A SENIOR IF AGE GREATER THAN 65 */
-                    patientsList.get(patientsList.size()-1).setAge(currentLine[3]);
+                    patientsList.get(patientsList.size()-1).setBloodType(currentLine[3]);
                     patientsList.get(patientsList.size()-1).setGender(currentLine[4]);
                     patientsList.get(patientsList.size()-1).setInsured(Boolean.parseBoolean(currentLine[5]));
-                    patientsList.get(patientsList.size()-1).setPrescription(currentLine[6]);
 
+                    // locates the staff assigned to the patient in doctors.txt
                     for (Staff o : readDoctorsDatabase()) {
-                        if (o.getLastName().equals(currentLine[7].split(",")[0]) && o.getFirstName().equals(currentLine[7].split(",")[1]))
-                            patientsList.get(patientsList.size()-1).setAssignedStaff(o);
+                        if (o.getLastName().equals(currentLine[6].split(",")[0]) && 
+                            o.getFirstName().equals(currentLine[6].split(",")[1])) {
+                                patientsList.get(patientsList.size()-1).setAssignedStaff(o);
+                                break;
+                            }
                     }
-                    System.out.println(patientsList.get(patientsList.size()-1).getAssignedStaff().getLastName());
-                    patientsList.get(patientsList.size()-1).setIllness(currentLine[8]);
-                    patientsList.get(patientsList.size()-1).setPrescription(currentLine[9]);
+                    
+                    patientsList.get(patientsList.size()-1).setIllness(currentLine[7]);
+                    patientsList.get(patientsList.size()-1).setPrescription(currentLine[8]);
 
+                    // Looks for a matching test result in each of the test result text files
                     try {
+
+                        System.out.println("Test this " + mriList.get(currentLine[0] + "," + currentLine[1]));
+                        // Looks for a matching "LASTNAME,FIRSTNAME" key in the mriList HashMap
                         MRI patientmri = mriList.get(currentLine[0] + "," + currentLine[1]);
                         patientsList.get(patientsList.size()-1).addTestResult(patientmri);
+
+                        // Adds blood test fee to bill if it has result (500)
+                        currentPatientbill += patientsList.get(patientsList.size()-1).getTestResultsList().get("BloodTest").getFee();
                     } catch (Exception e) {
-                        System.out.println("I didnt see anything an mri for " + currentLine[0] + "," + currentLine[1]);
+//                        System.out.println("I didnt see anything an mri for " + currentLine[0] + "," + currentLine[1]);
                     }
 
-                    try { // FIXED THIS ONE PLEASEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+                    try {
                         BloodTest patientBloodTest = bloodTestList.get(currentLine[0] + "," + currentLine[1]);
                         patientsList.get(patientsList.size()-1).addTestResult(patientBloodTest);
+
+                        // Adds mri result fee to bill if it has result (15000)
+                        currentPatientbill += patientsList.get(patientsList.size()-1).getTestResultsList().get("MRI").getFee();
                     } catch (Exception e) {
-                        System.out.println("I didnt see anything a blood test for " + currentLine[0] + "," + currentLine[1]);
+//                        System.out.println("I didnt see anything a blood test for " + currentLine[0] + "," + currentLine[1]);
                     }
+
+                    // adds specific doctor fee to bill
+                    currentPatientbill += patientsList.get(patientsList.size()-1).getAssignedStaff().getFee();
+
+                    // sets the bill to patient
+                    patientsList.get(patientsList.size()-1).setBill(currentPatientbill);
+                    
+                    System.out.println("Before going to next line, hashmap is: "+patientsList.get(patientsList.size()-1).getTestResultsList());
+                    
 
                     line = bReader.readLine(); // read next line
             }
@@ -139,6 +164,23 @@ public class Reader {
         
         return doctorsList;
     }
+
+    public static DefaultTableModel initPatientsTableModel() {
+        DefaultTableModel patientsTableModel = new DefaultTableModel();
+
+        patientsTableModel.setColumnIdentifiers(new String[]{
+            "Last Name", "First Name", "Age", "Gender", "Blood Type", "Illness", "Prescription", "Insured", "Assigned Staff", "Bill", "TEST RESULTS"});
+
+            for (Patient o : readPatientsDatabase()) {
+                patientsTableModel.addRow(new Object[]{
+                    o.getLastName(), o.getFirstName(), o.getAge(),
+                    o.getGender(), o.getBloodType(), o.getIllness(), 
+                    o.getPrescription(), o.getInsured(), o.getAssignedStaff().getLastName() + ", " + o.getAssignedStaff().getFirstName(), 
+                    o.getBill(), "CHECK"});
+            }
+
+            return patientsTableModel;
+    }
     
 
     public static DefaultTableModel initDoctorsTableModel() {           // gets the entire doctors.txt to display when you open the Doctors table frame
@@ -147,7 +189,7 @@ public class Reader {
         doctorsTableModel.setColumnIdentifiers(new String[]{"Last Name", "First Name", "Occupation"});
         
         for (Staff o : readDoctorsDatabase()) {
-            System.out.println(o.getLastName());
+            // System.out.println(o.getLastName());
             doctorsTableModel.addRow(new Object[]{o.getLastName(), o.getFirstName(), o.getClass().getSimpleName()});
         }
         
@@ -226,6 +268,25 @@ public class Reader {
 
     }
 
+    public static void writeToPatients(String lineToWrite) { // ur supposed to have the line ready for writing
+        BufferedReader br = null; BufferedWriter bw = null;
+        try {
+            br = new BufferedReader(new FileReader(new File("patients.txt")));
+            bw = new BufferedWriter(new FileWriter(new File("patients.txt"), true));
+
+               int rowIndex = 0;
+            while ((br.readLine()) != null) { // while (bufferedreader does not read a line that doesnt contain nothing) { add number of lines read by the bufferedreader by 1 }
+                rowIndex++; 
+            }
+
+            if (rowIndex > 0) bw.newLine(); // writes a new line after the last row of content so that it doesnt overwrite it
+            bw.write(lineToWrite); br.close(); bw.close(); // writes the actual line
+
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+
     public static void writeToBloodTest(String lineToWrite) { // ur supposed to have the line ready for writing
         BufferedReader br = null; BufferedWriter bw = null;
         System.out.println(lineToWrite);
@@ -265,4 +326,13 @@ public class Reader {
              e.printStackTrace();
         }
     }
+
+    // use this to test your reader functions
+    // public static void main(String[] args) {
+    //     ArrayList<Patient> test = readPatientsDatabase();
+
+    //     for (Patient o : test) {
+    //         System.out.println(o.getAssignedStaff().getClass().getSimpleName());
+    //     }
+    // }
 }

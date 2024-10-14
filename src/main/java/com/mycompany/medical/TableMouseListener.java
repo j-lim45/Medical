@@ -23,10 +23,10 @@ public class TableMouseListener extends MouseAdapter {
      
     public void mouseClicked(MouseEvent event) {
         Point point = event.getPoint();
-        int row = table.rowAtPoint(point);
+        int column = table.columnAtPoint(point);
 
         
-        JOptionPane.showMessageDialog(table, "row #" + row + " is clicked");
+        JOptionPane.showMessageDialog(table, "column #" + column + " is clicked");
          
         // do your real thing here...
     }
