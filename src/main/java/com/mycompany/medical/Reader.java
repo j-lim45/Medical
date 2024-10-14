@@ -20,8 +20,8 @@ public class Reader {
 
     public static ArrayList<Patient> readPatientsDatabase() { // returns an arraylist of all of the patients after reading patients.txt, bloodtest.txt, and mri.txt
         ArrayList<Patient> patientsList = new ArrayList<Patient>();
-        HashMap<String, String> bloodTestList = new HashMap<String, String>();
-        HashMap<String, String> mriList = new HashMap<String, String>();
+        HashMap<String, BloodTest> bloodTestList = new HashMap<String, BloodTest>();
+        HashMap<String, MRI> mriList = new HashMap<String, MRI>();
 
         try {
             BufferedReader bReader = new BufferedReader(new FileReader(new File("bloodtest.txt")));
@@ -31,7 +31,13 @@ public class Reader {
             while (line != null) {                      
                     String[] currentLine = line.split(";");
                     
-                    bloodTestList.put(currentLine[0], currentLine[1]);
+
+                    bloodTestList.put(currentLine[0], 
+                    new BloodTest(Double.parseDouble(currentLine[1].split(",")[0]), 
+                        Double.parseDouble(currentLine[1].split(",")[1]), 
+                        Double.parseDouble(currentLine[1].split(",")[2]), 
+                        Double.parseDouble(currentLine[1].split(",")[3]), 
+                        Double.parseDouble(currentLine[1].split(",")[4])));
                     line = bReader.readLine(); // read next line
             }
             
@@ -48,7 +54,7 @@ public class Reader {
             while (line != null) {                      
                     String[] currentLine = line.split(";");
                     
-                    bloodTestList.put(currentLine[0], currentLine[1]);
+                    mriList.put(currentLine[0], new MRI(currentLine[1], currentLine[2]));
                     line = bReader.readLine(); // read next line
             }
             
@@ -66,7 +72,37 @@ public class Reader {
                     String[] currentLine = line.split(";");
                     
                     patientsList.add(new Patient());
-                    Patient currentPatient = patientsList.get(patientsList.size()-1);
+                    patientsList.get(patientsList.size()-1).setLastName(currentLine[0]);
+                    patientsList.get(patientsList.size()-1).setLastName(currentLine[1]);
+                    patientsList.get(patientsList.size()-1).setAge(currentLine[2]);
+                    /* TO DO : PLEASE CONVERT AGE TO MAKE A SENIOR IF AGE GREATER THAN 65 */
+                    patientsList.get(patientsList.size()-1).setAge(currentLine[3]);
+                    patientsList.get(patientsList.size()-1).setGender(currentLine[4]);
+                    patientsList.get(patientsList.size()-1).setInsured(Boolean.parseBoolean(currentLine[5]));
+                    patientsList.get(patientsList.size()-1).setPrescription(currentLine[6]);
+
+                    for (Staff o : readDoctorsDatabase()) {
+                        if (o.getLastName().equals(currentLine[7].split(",")[0]) && o.getFirstName().equals(currentLine[7].split(",")[1]))
+                            patientsList.get(patientsList.size()-1).setAssignedStaff(o);
+                    }
+                    System.out.println(patientsList.get(patientsList.size()-1).getAssignedStaff().getLastName());
+                    patientsList.get(patientsList.size()-1).setIllness(currentLine[8]);
+                    patientsList.get(patientsList.size()-1).setPrescription(currentLine[9]);
+
+                    try {
+                        MRI patientmri = mriList.get(currentLine[0] + "," + currentLine[1]);
+                        patientsList.get(patientsList.size()-1).addTestResult(patientmri);
+                    } catch (Exception e) {
+                        System.out.println("I didnt see anything an mri for " + currentLine[0] + "," + currentLine[1]);
+                    }
+
+                    try { // FIXED THIS ONE PLEASEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+                        BloodTest patientBloodTest = bloodTestList.get(currentLine[0] + "," + currentLine[1]);
+                        patientsList.get(patientsList.size()-1).addTestResult(patientBloodTest);
+                    } catch (Exception e) {
+                        System.out.println("I didnt see anything a blood test for " + currentLine[0] + "," + currentLine[1]);
+                    }
+
                     line = bReader.readLine(); // read next line
             }
             

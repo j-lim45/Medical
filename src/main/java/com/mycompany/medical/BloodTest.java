@@ -22,6 +22,16 @@ public class BloodTest implements TestResult {
     // private double eosinophils;     // 0.00 - 5.00%
     // private double plateletCount;   // 140.00 - 440.00 x 10^9/L
 
+    BloodTest(double sugar, double cholesterol, double triglycerides, double creatinine, double uricAcid) {
+        this.sugar = sugar;
+        this.cholesterol = cholesterol;
+        this.triglycerides = triglycerides;
+        this.creatinine = creatinine;
+        this.uricAcid = uricAcid;
+    }
+
+
+
     //------------------------------------------Blood Count-----------------------------------------//
     public double getSugar() {
         return sugar;

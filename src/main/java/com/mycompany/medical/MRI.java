@@ -1,9 +1,14 @@
 package com.mycompany.medical;
 
 public class MRI implements TestResult {
-    private double fee = 15000;
-    private String findings;
-    private String impression;
+    protected double fee = 15000;
+    protected String findings;
+    protected String impression;
+
+    MRI(String findings, String impressions) {
+        this.findings = findings;
+        this.impression = impressions;
+    }
 
     @Override
     public double getFee() {

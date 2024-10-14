@@ -2,7 +2,7 @@ package com.mycompany.medical;
 
 public class Patient {
     // Medical Records
-    protected String lastName, firstName, age, bloodType;
+    protected String lastName, firstName, age, bloodType, gender;
     protected String illness;
     protected boolean insured;
     
@@ -28,6 +28,10 @@ public class Patient {
 
     public String getBloodType() {
         return bloodType;
+    }
+
+    public String getGender() {
+        return gender;
     }
 
     public String getIllness() {
@@ -68,6 +72,10 @@ public class Patient {
 
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public void setInsured(boolean insured) {
