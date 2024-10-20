@@ -9,8 +9,10 @@ public class Patient {
     protected boolean insured;
     
     // Hospital Records
-    protected java.util.HashMap<String, TestResult> testResultsList = new HashMap<String, TestResult>();
-    protected String prescription;
+    // protected java.util.HashMap<String, TestResult> testResultsList = new HashMap<String, TestResult>();
+    protected BloodTest bloodTestResult;
+    protected MRI mriResult;
+    protected Prescription prescription;
     protected Staff assignedStaff;
     protected double bill;
 
@@ -44,12 +46,15 @@ public class Patient {
         return insured;
     }
 
-    public String getPrescription() {
+    public Prescription getPrescription() {
         return prescription;
     }
 
-    public java.util.HashMap<String, TestResult> getTestResultsList() {
-        return testResultsList;
+    public BloodTest getBloodTestResult() {
+        return bloodTestResult;
+    }
+    public MRI getMriResult() {
+        return mriResult;
     }
 
     
@@ -92,13 +97,18 @@ public class Patient {
         this.illness = illness;
     }
 
-    public void setPrescription(String prescription) {
+    public void setPrescription(Prescription prescription) {
         this.prescription = prescription;
     }
 
-    public void addTestResult(TestResult testResult) { // testResultsList<"BloodTest", someObjName>
-        testResultsList.put(testResult.getClass().getSimpleName(), testResult);
+    public void addTestResult(BloodTest testResult) {
+        this.bloodTestResult = testResult;
     }
+
+    public void addTestResult(MRI testResult) {
+        this.mriResult = testResult;
+    }
+
 
     public void setAssignedStaff(Staff assignedStaff) {
         this.assignedStaff = assignedStaff;

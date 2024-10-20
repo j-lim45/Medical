@@ -43,10 +43,8 @@ public class DoctorsPage extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         AddButton = new javax.swing.JButton();
         CardiologistButton = new javax.swing.JButton();
-        DermatologistButton = new javax.swing.JButton();
         NeurologistButton = new javax.swing.JButton();
         OncologistButton = new javax.swing.JButton();
-        OpthalmologistButton = new javax.swing.JButton();
         MenuButton = new javax.swing.JButton();
         NurseButton = new javax.swing.JButton();
         AllButton = new javax.swing.JButton();
@@ -117,16 +115,6 @@ public class DoctorsPage extends javax.swing.JFrame {
             }
         });
 
-        DermatologistButton.setBackground(new java.awt.Color(0, 0, 153));
-        DermatologistButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        DermatologistButton.setForeground(new java.awt.Color(255, 255, 255));
-        DermatologistButton.setText("Dermatologist");
-        DermatologistButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DermatologistButtonActionPerformed(evt);
-            }
-        });
-
         NeurologistButton.setBackground(new java.awt.Color(0, 0, 153));
         NeurologistButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         NeurologistButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,16 +132,6 @@ public class DoctorsPage extends javax.swing.JFrame {
         OncologistButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OncologistButtonActionPerformed(evt);
-            }
-        });
-
-        OpthalmologistButton.setBackground(new java.awt.Color(0, 0, 153));
-        OpthalmologistButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        OpthalmologistButton.setForeground(new java.awt.Color(255, 255, 255));
-        OpthalmologistButton.setText("Opthalmologist");
-        OpthalmologistButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OpthalmologistButtonActionPerformed(evt);
             }
         });
 
@@ -189,10 +167,8 @@ public class DoctorsPage extends javax.swing.JFrame {
 
         jLayeredPane1.setLayer(AddButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(CardiologistButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(DermatologistButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(NeurologistButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(OncologistButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(OpthalmologistButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(MenuButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(NurseButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(AllButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -207,10 +183,8 @@ public class DoctorsPage extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(DermatologistButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(NeurologistButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(NeurologistButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                                 .addComponent(OncologistButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(OpthalmologistButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                                 .addComponent(NurseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(CardiologistButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AllButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,21 +197,17 @@ public class DoctorsPage extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGap(78, 78, 78)
                 .addComponent(AllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(CardiologistButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(DermatologistButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(NeurologistButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(OncologistButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(OpthalmologistButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(NurseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addComponent(MenuButton)
                 .addGap(35, 35, 35))
         );
@@ -272,7 +242,10 @@ public class DoctorsPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
-        doctorsTableModel.setDataVector(Reader.updateDoctors(), new String[]{"Last Name", "First Name", "Occupation"});
+//        doctorsTableModel.setDataVector(Reader.updateDoctors(), new String[]{"Last Name", "First Name", "Occupation"});
+        Doctor_UI obj = new Doctor_UI();
+        obj.setVisible(true);
+        dispose();
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
@@ -285,10 +258,6 @@ public class DoctorsPage extends javax.swing.JFrame {
         doctorsTableModel.setDataVector(Reader.updateDoctors("Cardiologist"), new String[]{"Last Name", "First Name", "Occupation"});
     }//GEN-LAST:event_CardiologistButtonActionPerformed
 
-    private void DermatologistButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DermatologistButtonActionPerformed
-        doctorsTableModel.setDataVector(Reader.updateDoctors("Dermatologist"), new String[]{"Last Name", "First Name", "Occupation"});
-    }//GEN-LAST:event_DermatologistButtonActionPerformed
-
     private void NeurologistButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NeurologistButtonActionPerformed
         doctorsTableModel.setDataVector(Reader.updateDoctors("Neurologist"), new String[]{"Last Name", "First Name", "Occupation"});
     }//GEN-LAST:event_NeurologistButtonActionPerformed
@@ -297,24 +266,23 @@ public class DoctorsPage extends javax.swing.JFrame {
         doctorsTableModel.setDataVector(Reader.updateDoctors("Oncologist"), new String[]{"Last Name", "First Name", "Occupation"});
     }//GEN-LAST:event_OncologistButtonActionPerformed
 
-    private void OpthalmologistButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpthalmologistButtonActionPerformed
-        doctorsTableModel.setDataVector(Reader.updateDoctors("Ophthalmologist"), new String[]{"Last Name", "First Name", "Occupation"});
-    }//GEN-LAST:event_OpthalmologistButtonActionPerformed
-
     private void NurseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NurseButtonActionPerformed
         doctorsTableModel.setDataVector(Reader.updateDoctors("Nurse"), new String[]{"Last Name", "First Name", "Occupation"});
     }//GEN-LAST:event_NurseButtonActionPerformed
 
     private void AllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AllButtonActionPerformed
-        // TODO add your handling code here:
+        doctorsTableModel.setDataVector(Reader.updateDoctors(), new String[]{"Last Name", "First Name", "Occupation"});
     }//GEN-LAST:event_AllButtonActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        java.awt.Point point = evt.getPoint();
-        int column = jTable1.columnAtPoint(point);
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        int column = jTable1.columnAtPoint(evt.getPoint());
 
-        
-        javax.swing.JOptionPane.showMessageDialog(jTable1, "this method column #" + column + " is clicked");
+        if (row >= 0 && column >= 0) {
+            String columnHeader = jTable1.getColumnName(column);
+            Object cellValue = jTable1.getValueAt(row, column);
+            javax.swing.JOptionPane.showMessageDialog(null, columnHeader+ ": " + cellValue.toString(), " ", javax.swing.JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     public static void main(String args[]) {
@@ -354,12 +322,10 @@ public class DoctorsPage extends javax.swing.JFrame {
     private javax.swing.JButton AddButton;
     private javax.swing.JButton AllButton;
     private javax.swing.JButton CardiologistButton;
-    private javax.swing.JButton DermatologistButton;
     private javax.swing.JButton MenuButton;
     private javax.swing.JButton NeurologistButton;
     private javax.swing.JButton NurseButton;
     private javax.swing.JButton OncologistButton;
-    private javax.swing.JButton OpthalmologistButton;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;

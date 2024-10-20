@@ -145,9 +145,13 @@ public class MriUI extends javax.swing.JFrame {
         
         if (findings.isEmpty()) {
             errorMessages.append("Please fill out your findings.\n");
+        } else if (findings.contains(";")) {
+            errorMessages.append("Findings must not contain semicolon (;)\n");
         }
         if (impressions.isEmpty()) {
             errorMessages.append("Please express your impressions.\n");
+        } else if (impressions.contains(";")) {
+            errorMessages.append("Impressions must not contain semicolon (;)\n");
         }
         // If there are any error messages, show them in a dialog box
         if (errorMessages.length() > 0) {

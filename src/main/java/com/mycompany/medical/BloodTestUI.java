@@ -196,6 +196,15 @@ public class BloodTestUI extends javax.swing.JFrame {
         if (uricacid.isEmpty()) {
             errorMessages.append("Please fill out your Uric Acid level.\n");
         }
+        try {
+            Double.parseDouble(sugar);
+            Double.parseDouble(cholesterol);
+            Double.parseDouble(triglycerides);
+            Double.parseDouble(creatinine);
+            Double.parseDouble(uricacid);
+        } catch (Exception e) {
+            errorMessages.append("Please fill out a valid decimal input.\n");
+        }
 
         // If there are any error messages, show them in a dialog box
         if (errorMessages.length() > 0) {

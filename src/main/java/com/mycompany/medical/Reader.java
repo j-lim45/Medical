@@ -72,8 +72,9 @@ public class Reader {
                     double currentPatientbill = 0;
 
                     // Checks if the patient is a senior citizen
-                    if (Integer.parseInt(currentLine[2]) >= 65) patientsList.add(new SeniorCitizenPatient());
-                    else                                        patientsList.add(new Patient());
+                    if      (Integer.parseInt(currentLine[2]) >= 65)    patientsList.add(new SeniorCitizenPatient());
+                    else if (Boolean.parseBoolean(currentLine[5]))      patientsList.add(new InsuredPatient());
+                    else                                                patientsList.add(new Patient());
 
                     // sets instance variables for the current patient
                     patientsList.get(patientsList.size()-1).setLastName(currentLine[0]);
@@ -93,39 +94,40 @@ public class Reader {
                     }
                     
                     patientsList.get(patientsList.size()-1).setIllness(currentLine[7]);
-                    patientsList.get(patientsList.size()-1).setPrescription(currentLine[8]);
+                    patientsList.get(patientsList.size()-1).setPrescription(new Prescription(currentLine[8], Double.parseDouble(currentLine[9])));
+
+                    //---------------SET BILL-------------//
 
                     // Looks for a matching test result in each of the test result text files
                     try {
 
-                        System.out.println("Test this " + mriList.get(currentLine[0] + "," + currentLine[1]));
                         // Looks for a matching "LASTNAME,FIRSTNAME" key in the mriList HashMap
                         MRI patientmri = mriList.get(currentLine[0] + "," + currentLine[1]);
                         patientsList.get(patientsList.size()-1).addTestResult(patientmri);
 
-                        // Adds blood test fee to bill if it has result (500)
-                        currentPatientbill += patientsList.get(patientsList.size()-1).getTestResultsList().get("BloodTest").getFee();
+                        // Adds mri test fee to bill if it has result (15000)
+                        currentPatientbill += patientsList.get(patientsList.size()-1).getMriResult().getFee();
                     } catch (Exception e) {
-//                        System.out.println("I didnt see anything an mri for " + currentLine[0] + "," + currentLine[1]);
+                    //    Didn't find a mri test for this patient in bloodtest.txt
                     }
 
                     try {
                         BloodTest patientBloodTest = bloodTestList.get(currentLine[0] + "," + currentLine[1]);
                         patientsList.get(patientsList.size()-1).addTestResult(patientBloodTest);
 
-                        // Adds mri result fee to bill if it has result (15000)
-                        currentPatientbill += patientsList.get(patientsList.size()-1).getTestResultsList().get("MRI").getFee();
+                        // Adds blood test result fee to bill if it has result (500)
+                        currentPatientbill += patientsList.get(patientsList.size()-1).getBloodTestResult().getFee();
                     } catch (Exception e) {
-//                        System.out.println("I didnt see anything a blood test for " + currentLine[0] + "," + currentLine[1]);
+                    //    Didn't find a blood test for this patient in bloodtest.txt
                     }
 
+                    currentPatientbill += patientsList.get(patientsList.size()-1).getPrescription().getPrice();
                     // adds specific doctor fee to bill
                     currentPatientbill += patientsList.get(patientsList.size()-1).getAssignedStaff().getFee();
 
                     // sets the bill to patient
+
                     patientsList.get(patientsList.size()-1).setBill(currentPatientbill);
-                    
-                    System.out.println("Before going to next line, hashmap is: "+patientsList.get(patientsList.size()-1).getTestResultsList());
                     
 
                     line = bReader.readLine(); // read next line
@@ -140,7 +142,7 @@ public class Reader {
         return patientsList;
     }
     
-    public static ArrayList<Staff> readDoctorsDatabase() {  // returns an arraylist of all of the staff after reading the text file
+    public static ArrayList<Staff> readDoctorsDatabase() {              // Returns an arraylist of all of the staff after reading the text file
         
         ArrayList<Staff> doctorsList = new ArrayList<Staff>();
         try {
@@ -165,7 +167,7 @@ public class Reader {
         return doctorsList;
     }
 
-    public static DefaultTableModel initPatientsTableModel() {
+    public static DefaultTableModel initPatientsTableModel() {          // Initializes the Patient Table Data
         DefaultTableModel patientsTableModel = new DefaultTableModel();
 
         patientsTableModel.setColumnIdentifiers(new String[]{
@@ -173,10 +175,16 @@ public class Reader {
 
             for (Patient o : readPatientsDatabase()) {
                 patientsTableModel.addRow(new Object[]{
-                    o.getLastName(), o.getFirstName(), o.getAge(),
-                    o.getGender(), o.getBloodType(), o.getIllness(), 
-                    o.getPrescription(), o.getInsured(), o.getAssignedStaff().getLastName() + ", " + o.getAssignedStaff().getFirstName(), 
-                    o.getBill(), "CHECK"});
+                    o.getLastName(), 
+                    o.getFirstName(), 
+                    o.getAge(),
+                    o.getGender(), 
+                    o.getBloodType(), 
+                    o.getIllness(), 
+                    o.getPrescription().getName(), 
+                    o.getInsured(), 
+                    o.getAssignedStaff().getLastName() + ", " + o.getAssignedStaff().getFirstName(), 
+                    "₱" + new java.text.DecimalFormat("0.00").format(o.getBill()), "CHECK"});
             }
 
             return patientsTableModel;
@@ -194,6 +202,39 @@ public class Reader {
         }
         
         return doctorsTableModel;
+    }
+
+    public static DefaultTableModel getPatientBillTableModel(Patient patient) {           // gets the individual fees to put into a bill table of a patient
+        DefaultTableModel patientBillModel = new DefaultTableModel();  // The model data to be used for the table
+        java.text.DecimalFormat twoPlaces = new java.text.DecimalFormat("0.00");
+        double originalFee = 0;
+
+        double doctorFee = patient.getAssignedStaff().getFee(); originalFee += doctorFee;
+        double prescriptionFee = patient.getPrescription().getPrice(); originalFee += prescriptionFee;
+
+        patientBillModel.setColumnIdentifiers(new String[]{"DESCRIPTION", "COST"});
+
+        patientBillModel.addRow(new Object[]{patient.getAssignedStaff().getClass().getSimpleName(), "₱" + twoPlaces.format(doctorFee)});
+
+        if (patient.getBloodTestResult() != null) {
+            double bloodTestFee = patient.getBloodTestResult().getFee();
+
+            patientBillModel.addRow(new Object[]{"Blood Test", "₱" + twoPlaces.format(bloodTestFee)});
+            originalFee += bloodTestFee;
+        }
+        if (patient.getMriResult() != null) {
+            double mriFee = patient.getMriResult().getFee();
+
+            patientBillModel.addRow(new Object[]{"MRI Scan", "₱" + twoPlaces.format(mriFee)});
+            originalFee += mriFee;
+        }
+
+        patientBillModel.addRow(new Object[]{patient.getPrescription().getName(), "₱" + twoPlaces.format(prescriptionFee)});
+
+        if      (patient.getClass().getSimpleName().equals("InsuredPatient"))       patientBillModel.addRow(new Object[]{"Insurance", "-₱" + twoPlaces.format(originalFee - patient.getBill())});
+        else if (patient.getClass().getSimpleName().equals("SeniorCitizenPatient")) patientBillModel.addRow(new Object[]{"Senior Discount", "-₱" + twoPlaces.format(originalFee - patient.getBill())});
+
+        return patientBillModel;
     }
     
     public static int countOccupations(String occupation) {             // used solely to identify number of rows for 2d array row size by counting how many occupations in the database
@@ -246,9 +287,9 @@ public class Reader {
         return occupationList.get(new java.util.Random().nextInt(occupationList.size()));
     }
     
-    public static void writeToDoctors(Staff o) {                        // Use this when adding a new doctor to the database (it needs a staff object parameter)
+    public static void writeToDoctors(String lineToWrite) {                        // Use this when adding a new doctor to the database (it needs a staff object parameter)
         BufferedReader br = null; BufferedWriter bw = null;
-        String lineToWrite =  o.getLastName() + "," + o.getFirstName() + "," + o.getClass().getSimpleName();
+        // String lineToWrite =  o.getLastName() + "," + o.getFirstName() + "," + o.getClass().getSimpleName();
 
         try {
             br = new BufferedReader(new FileReader(new File("doctors.txt")));

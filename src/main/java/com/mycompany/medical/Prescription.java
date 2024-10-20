@@ -1,19 +1,24 @@
 package com.mycompany.medical;
 
 public class Prescription {
-    private String genericName;
+    private String name;
     private double price;
 
-    public String getGenericName() {
-        return genericName;
+    Prescription(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setGenericName(String genericName) {
-        this.genericName = genericName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPrice(double price) {

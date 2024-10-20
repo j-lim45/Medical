@@ -1,6 +1,6 @@
 package com.mycompany.medical;
 
-public class BloodTest extends TestResult {
+public class BloodTest implements TestResult {
     private double fee = 500; // if you plan on changing the fee, please change it too in PatientForm.java
 
     // Blood Count
@@ -10,18 +10,6 @@ public class BloodTest extends TestResult {
     private double creatinine;      // 0.40 - 1.40 mg/dL
     private double uricAcid;        // 2.40 - 8.00 mg/dL
 
-    // Blood Chemistry
-    // private double hemoglobin;      // 14.00 - 18.00 g/dl
-    // private double hematocrit;      // 40.00 - 54.00 %
-    // private double rbcCount;        // 4.00 - 6.10 x 10^12/L
-    // private double wbcCount;        // 4.30 - 10.00 x 10^9/L
-
-    // private double neutrophil;      // 44.20 - 80.20 %
-    // private double lymphocytes;     // 28.00 - 48.00 %
-    // private double monocytes;       // 3.00 - 6.00 %
-    // private double eosinophils;     // 0.00 - 5.00%
-    // private double plateletCount;   // 140.00 - 440.00 x 10^9/L
-
     BloodTest(double sugar, double cholesterol, double triglycerides, double creatinine, double uricAcid) {
         this.sugar = sugar;
         this.cholesterol = cholesterol;
@@ -29,24 +17,6 @@ public class BloodTest extends TestResult {
         this.creatinine = creatinine;
         this.uricAcid = uricAcid;
     }
-
-    
-    public String getFindings() {
-        return "1";
-    }
-
-    public String getImpression() {
-        return "1";
-    }
-
-
-    public void setFindings(String findings) {
-    }
-
-    public void setImpression(String impression) {
-    }
-
-
 
     //------------------------------------------Blood Count-----------------------------------------//
     public double getSugar() {
