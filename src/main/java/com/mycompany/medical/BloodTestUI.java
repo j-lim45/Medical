@@ -201,7 +201,7 @@ public class BloodTestUI extends javax.swing.JFrame {
         if (errorMessages.length() > 0) {
             JOptionPane.showMessageDialog(rootPane, errorMessages.toString(), "Input Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            String lineBlood = PatientForm.nameToSend.split(";")[0] + ";" + PatientForm.nameToSend.split(";")[1] + ";" + sugar + ";" + cholesterol + ";" + triglycerides + ";" + creatinine + ";" + uricacid;
+            String lineBlood = PatientForm.nameToSend.split(",")[0] + "," + PatientForm.nameToSend.split(",")[1] + ";" + sugar + "," + cholesterol + "," + triglycerides + "," + creatinine + "," + uricacid;
             Reader.writeToBloodTest(lineBlood);
             dispose();
         }

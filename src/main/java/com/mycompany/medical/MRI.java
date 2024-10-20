@@ -1,13 +1,49 @@
 package com.mycompany.medical;
 
-public class MRI implements TestResult {
-    protected double fee = 15000;
+public class MRI extends TestResult {
+    protected double fee = 15000; // if you plan on changing the fee, please change it too in PatientForm.java
     protected String findings;
     protected String impression;
+
 
     MRI(String findings, String impressions) {
         this.findings = findings;
         this.impression = impressions;
+    }
+
+    // TO DO : VERY BANDAID SOLUTION PLEASE FIXXXXXXXXXXXXXXXXXXXXXXXX
+    public double getSugar() {
+        return 1;
+    }
+
+    public double getCholesterol() {
+        return 1;
+    }
+
+    public double getTriglycerides() {
+        return 1;
+    }
+
+    public double getCreatinine() {
+        return 1;
+    }
+
+    public double getUricAcid() {
+        return 1;
+    }
+
+
+    public void setSugar(double sugar) {
+        
+    }
+
+    public void setCholesterol(double cholesterol) {
+    }
+
+    public void setTriglycerides(double triglycerides) {
+    }
+
+    public void setCreatinine(double creatinine) {
     }
 
     @Override

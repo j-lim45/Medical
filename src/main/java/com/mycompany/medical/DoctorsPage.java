@@ -311,10 +311,10 @@ public class DoctorsPage extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         java.awt.Point point = evt.getPoint();
-        int row = jTable1.rowAtPoint(point);
+        int column = jTable1.columnAtPoint(point);
 
         
-        javax.swing.JOptionPane.showMessageDialog(jTable1, "row #" + row + " is clicked");
+        javax.swing.JOptionPane.showMessageDialog(jTable1, "this method column #" + column + " is clicked");
     }//GEN-LAST:event_jTable1MouseClicked
 
     public static void main(String args[]) {
