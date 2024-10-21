@@ -56,6 +56,9 @@ public class BloodTest implements TestResult {
         this.creatinine = creatinine;
     }
 
+    public void setUricAcid(double uricAcid) {
+        this.uricAcid = uricAcid;
+    }
 
 
     //------------------------------------------Fee-----------------------------------------//
