@@ -1,7 +1,5 @@
 package com.mycompany.medical;
 
-import java.util.HashMap;
-
 public class Patient {
     // Medical Records
     protected String lastName, firstName, age, bloodType, gender;
