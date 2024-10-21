@@ -5,9 +5,6 @@ public class Patient {
     protected String lastName, firstName, age, bloodType, gender;
     protected String illness;
     protected boolean insured;
-    
-    // Hospital Records
-    // protected java.util.HashMap<String, TestResult> testResultsList = new HashMap<String, TestResult>();
     protected BloodTest bloodTestResult;
     protected MRI mriResult;
     protected Prescription prescription;
