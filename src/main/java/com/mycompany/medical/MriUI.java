@@ -157,6 +157,8 @@ public class MriUI extends javax.swing.JFrame {
         if (errorMessages.length() > 0) {
             JOptionPane.showMessageDialog(rootPane, errorMessages.toString(), "Input Error", JOptionPane.ERROR_MESSAGE);
         } else {
+
+            // Writes mri test result to mri.txt
             lineMRI = PatientForm.nameToSend.split(",")[0] + "," + PatientForm.nameToSend.split(",")[1] + ";" + findings + ";" + impressions;
             Reader.writeToMRI(lineMRI);
             dispose();

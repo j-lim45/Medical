@@ -565,9 +565,7 @@ public class PatientForm extends javax.swing.JFrame {
             if (Blood.isSelected()){
                 BloodTestUI obj = new BloodTestUI();
                 obj.setVisible(true);
-                System.out.println("Bill" + bill);
                 bill += 500;
-                System.out.println("Bill" + bill);
             }
 
             if (MRI.isSelected()){
@@ -576,10 +574,10 @@ public class PatientForm extends javax.swing.JFrame {
                 bill += 15000;
             }
             bill += doctor.getFee();
-            System.out.println("Final bill: " + bill);
+
+            // Prepares the line to write in patients.txt after inputting info
             String lineToWrite = ln.toUpperCase() + ";" + fn.toUpperCase() + ";" + age + ";" + blood + ";" + sex.toUpperCase() + ";" + insurance + ";" + doctor.getLastName() + "," + doctor.getFirstName() + ";" + diagnosis.toUpperCase() + ";" + prescription.toUpperCase() + ";" + prescriptionCost;
             
-            System.out.println(lineToWrite);
             Reader.writeToPatients(lineToWrite);
 
 //          Set to default after submitting

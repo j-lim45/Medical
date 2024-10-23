@@ -1,6 +1,6 @@
 package com.mycompany.medical;
 
-public abstract class Staff {
+public abstract class Staff { // extended to Doctor and Nurse
     protected String lastName, firstName;
     protected double fee;
 

@@ -173,6 +173,8 @@ public class BloodTestUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        // Returns the results of the blood test form
         String sugar = Sugar.getText();
         String cholesterol = Cholesterol.getText();
         String triglycerides = Triglycerides.getText();
@@ -197,7 +199,7 @@ public class BloodTestUI extends javax.swing.JFrame {
             errorMessages.append("Please fill out your Uric Acid level.\n");
         }
         try {
-            Double.parseDouble(sugar);
+            Double.parseDouble(sugar);                                                  // Exception handling for blood test levels
             Double.parseDouble(cholesterol);
             Double.parseDouble(triglycerides);
             Double.parseDouble(creatinine);
@@ -210,6 +212,8 @@ public class BloodTestUI extends javax.swing.JFrame {
         if (errorMessages.length() > 0) {
             JOptionPane.showMessageDialog(rootPane, errorMessages.toString(), "Input Error", JOptionPane.ERROR_MESSAGE);
         } else {
+            
+            // Writes blood test result to bloodtest.txt
             String lineBlood = PatientForm.nameToSend.split(",")[0] + "," + PatientForm.nameToSend.split(",")[1] + ";" + sugar + "," + cholesterol + "," + triglycerides + "," + creatinine + "," + uricacid;
             Reader.writeToBloodTest(lineBlood);
             dispose();

@@ -8,6 +8,17 @@ package com.mycompany.medical;
  *
  * @author Adriane
  */
+
+/*
+ * jLabel1.setText() specifies the patient name
+ * 
+ * jTable1.setModel() sets the data to display for the table after getting its model from Reader.getPatientBillTableModel()
+ * 
+ * jLabel3.setText() sets the total bill of the patient
+ * 
+ * patientToSend is located in PatientsPage and it is the patient specified to show when you click on the patientBill page
+ */
+
 public class PatientBill extends javax.swing.JDialog {
 
     /**

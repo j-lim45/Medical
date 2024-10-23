@@ -8,6 +8,14 @@ package com.mycompany.medical;
  *
  * @author Adriane
  */
+
+/*
+ * jTextFieldX.setText() displays the value for a test result if it has one assigned to it. It displays N/A if it is null (no test was assigned to the patient)
+ * 
+ * patientToSend is located in PatientsPage and it is the patient specified to show when you click on the test results page
+ */
+
+
 public class PatientTestResultPage extends javax.swing.JDialog {
 
     /**

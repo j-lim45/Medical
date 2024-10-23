@@ -1,7 +1,7 @@
 package com.mycompany.medical;
 
 public class MRI implements TestResult {
-    protected double fee = 15000; // if you plan on changing the fee, please change it too in PatientForm.java
+    protected double fee = 15000;
     protected String findings;
     protected String impression;
 

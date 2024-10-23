@@ -18,10 +18,11 @@ import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 public class Reader {
 
-    public static ArrayList<Patient> readPatientsDatabase() { // returns an arraylist of all of the patients after reading patients.txt, bloodtest.txt, and mri.txt
-        ArrayList<Patient> patientsList = new ArrayList<Patient>();
-        HashMap<String, BloodTest> bloodTestList = new HashMap<String, BloodTest>();
-        HashMap<String, MRI> mriList = new HashMap<String, MRI>();
+    // returns an arraylist of all of the patients after reading patients.txt, bloodtest.txt, and mri.txt
+    public static ArrayList<Patient> readPatientsDatabase() { 
+        ArrayList<Patient> patientsList = new ArrayList<Patient>();                                             // List of every patient with their assigned instance variables
+        HashMap<String, BloodTest> bloodTestList = new HashMap<String, BloodTest>();                            // List of every blood test result
+        HashMap<String, MRI> mriList = new HashMap<String, MRI>();                                              // List of every mri result
 
         // Reads every blood test result in bloodtest.txt identifiable by "LASTNAME,FIRSTNAME" as the key
         try {
@@ -33,11 +34,12 @@ public class Reader {
                     String[] currentLine = line.split(";");
 
                     bloodTestList.put(currentLine[0], 
-                    new BloodTest(Double.parseDouble(currentLine[1].split(",")[0]), 
-                        Double.parseDouble(currentLine[1].split(",")[1]), 
-                        Double.parseDouble(currentLine[1].split(",")[2]), 
-                        Double.parseDouble(currentLine[1].split(",")[3]), 
-                        Double.parseDouble(currentLine[1].split(",")[4])));
+                    new BloodTest(
+                        Double.parseDouble(currentLine[1].split(",")[0]),   // sugar
+                        Double.parseDouble(currentLine[1].split(",")[1]),   // cholesterol
+                        Double.parseDouble(currentLine[1].split(",")[2]),   // triglycerides
+                        Double.parseDouble(currentLine[1].split(",")[3]),   // creatinine
+                        Double.parseDouble(currentLine[1].split(",")[4]))); // uric acid
                     line = bReader.readLine(); // read next line
             }
             bReader.close();
@@ -54,7 +56,8 @@ public class Reader {
             while (line != null) {                      
                     String[] currentLine = line.split(";");
                     
-                    mriList.put(currentLine[0], new MRI(currentLine[1], currentLine[2])); // Key: LASTNAME,FIRSTNAME | Value: MRI Object(Findings,Impressions)
+                    // Key: LASTNAME,FIRSTNAME | Value: MRI Object(Findings,Impressions)
+                    mriList.put(currentLine[0], new MRI(currentLine[1], currentLine[2])); 
                     line = bReader.readLine();  // read next line
             }
             bReader.close();
@@ -71,7 +74,7 @@ public class Reader {
                     String[] currentLine = line.split(";");
                     double currentPatientbill = 0;
 
-                    // Checks if the patient is a senior citizen
+                    // Checks if the patient is a senior citizen or has insurance
                     if      (Integer.parseInt(currentLine[2]) >= 65)    patientsList.add(new SeniorCitizenPatient());
                     else if (Boolean.parseBoolean(currentLine[5]))      patientsList.add(new InsuredPatient());
                     else                                                patientsList.add(new Patient());
@@ -126,7 +129,6 @@ public class Reader {
                     currentPatientbill += patientsList.get(patientsList.size()-1).getAssignedStaff().getFee();
 
                     // sets the bill to patient
-
                     patientsList.get(patientsList.size()-1).setBill(currentPatientbill);
                     
 
@@ -142,7 +144,8 @@ public class Reader {
         return patientsList;
     }
     
-    public static ArrayList<Staff> readDoctorsDatabase() {              // Returns an arraylist of all of the staff after reading the text file
+    // Returns an arraylist of all of the staff after reading the text file
+    public static ArrayList<Staff> readDoctorsDatabase() {            
         
         ArrayList<Staff> doctorsList = new ArrayList<Staff>();
         try {
@@ -153,6 +156,7 @@ public class Reader {
             while (line != null) {
                     String[] currentLine = line.split(",");
                     
+                    // Creates a new specialist object based on the value of a specific cell in a line of doctors.txt
                     if (currentLine[2].equals("Nurse"))                  doctorsList.add(new Nurse(currentLine[0], currentLine[1]));
                     else if (currentLine[2].equals("Cardiologist"))      doctorsList.add(new Cardiologist(currentLine[0], currentLine[1]));
                     else if (currentLine[2].equals("Neurologist"))       doctorsList.add(new Neurologist(currentLine[0], currentLine[1]));
@@ -160,6 +164,7 @@ public class Reader {
                     line = bReader.readLine(); // read next line
             }
 
+            bReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -167,12 +172,16 @@ public class Reader {
         return doctorsList;
     }
 
-    public static DefaultTableModel initPatientsTableModel() {          // Initializes the Patient Table Data
+    // Initializes the Patient Table Data in PatientsPage for display
+    public static DefaultTableModel initPatientsTableModel() {         
         DefaultTableModel patientsTableModel = new DefaultTableModel();
 
+        // Sets the first row values
         patientsTableModel.setColumnIdentifiers(new String[]{
-            "Last Name", "First Name", "Age", "Gender", "Blood Type", "Illness", "Prescription", "Insured", "Assigned Staff", "Bill", "TEST RESULTS"});
+            "Last Name", "First Name", "Age", "Gender", "Blood Type", "Illness", "Prescription", "Insured", "Assigned Staff", "Bill", "TEST RESULTS"
+        });
 
+        // Iterates through the array list of patients to place in the table model (Creates a new row for each patient)
             for (Patient o : readPatientsDatabase()) {
                 patientsTableModel.addRow(new Object[]{
                     o.getLastName(), 
@@ -190,12 +199,14 @@ public class Reader {
             return patientsTableModel;
     }
     
-
+    // Initializes the Doctors Table Data in DoctorsPage for display
     public static DefaultTableModel initDoctorsTableModel() {           // gets the entire doctors.txt to display when you open the Doctors table frame
         DefaultTableModel doctorsTableModel = new DefaultTableModel();  // The model data to be used for the table
                 
+        // Sets the first row values
         doctorsTableModel.setColumnIdentifiers(new String[]{"Last Name", "First Name", "Occupation"});
         
+        // Iterates through the array list of doctors to place in the table model (Creates a new row for each staff)
         for (Staff o : readDoctorsDatabase()) {
             // System.out.println(o.getLastName());
             doctorsTableModel.addRow(new Object[]{o.getLastName(), o.getFirstName(), o.getClass().getSimpleName()});
@@ -204,24 +215,38 @@ public class Reader {
         return doctorsTableModel;
     }
 
-    public static DefaultTableModel getPatientBillTableModel(Patient patient) {           // gets the individual fees to put into a bill table of a patient
-        DefaultTableModel patientBillModel = new DefaultTableModel();  // The model data to be used for the table
+    // gets the individual fees to put into a bill table of a patient
+    public static DefaultTableModel getPatientBillTableModel(Patient patient) {          
+
+        // The model data to be used for the table
+        DefaultTableModel patientBillModel = new DefaultTableModel();  
         java.text.DecimalFormat twoPlaces = new java.text.DecimalFormat("0.00");
+
+        // Used to store the fee of a special patient(Insured/Senior) before the discount
         double originalFee = 0;
 
-        double doctorFee = patient.getAssignedStaff().getFee(); originalFee += doctorFee;
-        double prescriptionFee = patient.getPrescription().getPrice(); originalFee += prescriptionFee;
+        // Adds assigned staff fee to the originalFee
+        double doctorFee = patient.getAssignedStaff().getFee(); 
+        originalFee += doctorFee;
+
+        // Adds prescription fee to the originalFee
+        double prescriptionFee = patient.getPrescription().getPrice(); 
+        originalFee += prescriptionFee;
 
         patientBillModel.setColumnIdentifiers(new String[]{"DESCRIPTION", "COST"});
 
+        // Adds row of the assigned staff's occupation and its fee
         patientBillModel.addRow(new Object[]{patient.getAssignedStaff().getClass().getSimpleName(), "₱" + twoPlaces.format(doctorFee)});
 
+        // Adds blood test if patient applied for one
         if (patient.getBloodTestResult() != null) {
             double bloodTestFee = patient.getBloodTestResult().getFee();
 
             patientBillModel.addRow(new Object[]{"Blood Test", "₱" + twoPlaces.format(bloodTestFee)});
             originalFee += bloodTestFee;
         }
+
+        // Adds MRI if patient applied for one
         if (patient.getMriResult() != null) {
             double mriFee = patient.getMriResult().getFee();
 
@@ -229,15 +254,18 @@ public class Reader {
             originalFee += mriFee;
         }
 
+        // Adds prescription row
         patientBillModel.addRow(new Object[]{patient.getPrescription().getName(), "₱" + twoPlaces.format(prescriptionFee)});
 
+        // Adds discount of patient row
         if      (patient.getClass().getSimpleName().equals("InsuredPatient"))       patientBillModel.addRow(new Object[]{"Insurance", "-₱" + twoPlaces.format(originalFee - patient.getBill())});
         else if (patient.getClass().getSimpleName().equals("SeniorCitizenPatient")) patientBillModel.addRow(new Object[]{"Senior Discount", "-₱" + twoPlaces.format(originalFee - patient.getBill())});
 
         return patientBillModel;
     }
     
-    public static int countOccupations(String occupation) {             // used solely to identify number of rows for 2d array row size by counting how many occupations in the database
+    // used solely to identify number of rows for 2d array row size by counting how many of a specific occupation (parameter) are in the database
+    public static int countOccupations(String occupation) {             
         int counter = 0;
         for (Staff o : readDoctorsDatabase()) {
             if (o.getClass().getSimpleName().equals(occupation))    counter++;
@@ -246,7 +274,8 @@ public class Reader {
         return counter;
     }
     
-    public static String[][] updateDoctors() {                          // used to update Doctors database table to show every staff
+    // used to update Doctors database table to show every staff
+    public static String[][] updateDoctors() {                          
         String[][] objArr = new String[readDoctorsDatabase().size()][3];
 
         int i = 0;
@@ -260,8 +289,11 @@ public class Reader {
         return objArr;                                                  // setDataVactor() asks for String[][] so i cant use a resizable array
     }
     
-    public static String[][] updateDoctors(String occupation) {         // updates Doctors database table to only show specific occupation
-        String[][] objArr = new String[countOccupations(occupation)][3];// number of rows is calculated by method to identify how many occupations in the database
+    // updates Doctors database table to only show a specific occupation (ex. table only shows all Cardiologists)
+    public static String[][] updateDoctors(String occupation) {    
+
+        // number of rows is calculated by method to identify how many occupations in the database
+        String[][] objArr = new String[countOccupations(occupation)][3];
         
         int i = 0;
         for (Staff o : readDoctorsDatabase()) {                         
@@ -270,15 +302,14 @@ public class Reader {
                 objArr[i][1] = o.getFirstName();
                 objArr[i][2] = o.getClass().getSimpleName();
                 i++;
-                
             }
         }
 
         return objArr;                                                  // setDataVactor() asks for String[][] so i cant use a resizable array
     }
 
-    //       
-    public static Staff assignDoctor(String occupation) {               // returns a random doctor based on a specified occupation
+    // returns a random doctor based on a specified occupation     
+    public static Staff assignDoctor(String occupation) {               
         ArrayList<Staff> occupationList = new ArrayList<Staff>();
         for (Staff o : readDoctorsDatabase()) {
             if (o.getClass().getSimpleName().equals(occupation))    occupationList.add(o);
@@ -286,10 +317,10 @@ public class Reader {
 
         return occupationList.get(new java.util.Random().nextInt(occupationList.size()));
     }
-    
-    public static void writeToDoctors(String lineToWrite) {                        // Use this when adding a new doctor to the database (it needs a staff object parameter)
+
+    // Writes a new data/row of a staff to doctors.txt (Called by Doctor_UI)
+    public static void writeToDoctors(String lineToWrite) { // The line parameter must be in the correct format for writing
         BufferedReader br = null; BufferedWriter bw = null;
-        // String lineToWrite =  o.getLastName() + "," + o.getFirstName() + "," + o.getClass().getSimpleName();
 
         try {
             br = new BufferedReader(new FileReader(new File("doctors.txt")));
@@ -309,7 +340,8 @@ public class Reader {
 
     }
 
-    public static void writeToPatients(String lineToWrite) { // ur supposed to have the line ready for writing
+    // Writes a new data/row of a patient to patients.txt (Called by PatientForm)
+    public static void writeToPatients(String lineToWrite) { // The line parameter must be in the correct format for writing
         BufferedReader br = null; BufferedWriter bw = null;
         try {
             br = new BufferedReader(new FileReader(new File("patients.txt")));
@@ -328,9 +360,10 @@ public class Reader {
         }
     }
 
-    public static void writeToBloodTest(String lineToWrite) { // ur supposed to have the line ready for writing
+    // Writes a new data/row of a blood test result to bloodtest.txt (Called by BloodTestUI)
+    public static void writeToBloodTest(String lineToWrite) { // The line parameter must be in the correct format for writing
         BufferedReader br = null; BufferedWriter bw = null;
-        System.out.println(lineToWrite);
+
         try {
             br = new BufferedReader(new FileReader(new File("bloodtest.txt")));
             bw = new BufferedWriter(new FileWriter(new File("bloodtest.txt"), true));
@@ -348,6 +381,7 @@ public class Reader {
         }
     }
 
+    // Writes a new data/row of an MRI result to mri.txt (Called by MriUI)
     public static void writeToMRI(String lineToWrite) {
         BufferedReader br = null; BufferedWriter bw = null;
 
@@ -368,12 +402,4 @@ public class Reader {
         }
     }
 
-    // use this to test your reader functions
-    // public static void main(String[] args) {
-    //     ArrayList<Patient> test = readPatientsDatabase();
-
-    //     for (Patient o : test) {
-    //         System.out.println(o.getAssignedStaff().getClass().getSimpleName());
-    //     }
-    // }
 }
