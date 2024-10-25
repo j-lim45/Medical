@@ -104,7 +104,6 @@ public class Patient {
         this.mriResult = testResult;
     }
 
-
     public void setAssignedStaff(Staff assignedStaff) {
         this.assignedStaff = assignedStaff;
     }

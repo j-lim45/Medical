@@ -549,6 +549,8 @@ public class PatientForm extends javax.swing.JFrame {
         } else {
 
             if(Doctor.getSelectedItem().toString().length() > 0){
+
+                // Assigns a random doctor based on the specialization specified
                 doctor = Reader.assignDoctor((Doctor.getSelectedItem().toString()));
             } else {
                 errorMessages.append("Please choose a specialist\n");

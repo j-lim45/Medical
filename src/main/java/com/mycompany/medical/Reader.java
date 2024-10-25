@@ -18,6 +18,8 @@ import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 public class Reader {
 
+    //--------------------------------------READER---------------------------------------------------//
+
     // returns an arraylist of all of the patients after reading patients.txt, bloodtest.txt, and mri.txt
     public static ArrayList<Patient> readPatientsDatabase() { 
         ArrayList<Patient> patientsList = new ArrayList<Patient>();                                             // List of every patient with their assigned instance variables
@@ -198,6 +200,8 @@ public class Reader {
 
             return patientsTableModel;
     }
+
+    //--------------------------------------TABLE INITIALIZER---------------------------------------------------//
     
     // Initializes the Doctors Table Data in DoctorsPage for display
     public static DefaultTableModel initDoctorsTableModel() {           // gets the entire doctors.txt to display when you open the Doctors table frame
@@ -308,7 +312,7 @@ public class Reader {
         return objArr;                                                  // setDataVactor() asks for String[][] so i cant use a resizable array
     }
 
-    // returns a random doctor based on a specified occupation     
+    // returns a random doctor based on a specified occupation (Called by PatientForm)  
     public static Staff assignDoctor(String occupation) {               
         ArrayList<Staff> occupationList = new ArrayList<Staff>();
         for (Staff o : readDoctorsDatabase()) {
